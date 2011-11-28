@@ -53,14 +53,28 @@ class File
 	function move( $to )
 	{
 		if( !file_exists($this->parent->path.$this->filename) )
+		{
+			sys::new_error(-1, '文件不存在');
+			return 0;
+		}
 		rename( $this->parent->path.$this->filename, $to->path.$this->filename );
 		$this->parent = $to;
 		return $this;
 	}
 	
+	/**
+	 * 删除本文件
+	 * 
+	 */
 	function unlink()
 	{
-		
+		if ( !file_exists($this->parent->path.$this->filename) )
+		{
+			sys::new_error(-1, '文件不存在');
+			return 0;
+		}
+		unlink( $this->parent->path.$this->filename );
+		return 1;
 	}
 	
 	function path()
