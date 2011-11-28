@@ -45,6 +45,24 @@ class File
 		$this->contents = NULL;
 	}
 	
+	/**
+	 * 移动到 $to 文件夹下
+	 * 
+	 * @param Folder $to
+	 */
+	function move( $to )
+	{
+		if( !file_exists($this->parent->path.$this->filename) )
+		rename( $this->parent->path.$this->filename, $to->path.$this->filename );
+		$this->parent = $to;
+		return $this;
+	}
+	
+	function unlink()
+	{
+		
+	}
+	
 	function path()
 	{
 		return $this->parent->path . '/' . $this->filename;
@@ -75,7 +93,7 @@ class File
 }
 
 /**
- * 文件集和
+ * 文件集合
  * 
  * 
  * @author abreto
@@ -96,6 +114,13 @@ class Files extends _Set
 		parent::__destruct();
 	}
 	
+	/**
+	 * 在 $parent 目录下创建一个文件名为 $name 内容是 $contents 的文件
+	 * 
+	 * @param string 	$name
+	 * @param data 		$contents
+	 * @param Folder 	$parent
+	 */
 	function create( $name , $contents , $parent )
 	{
 		$path = $parent->path . '/' . $name;
@@ -105,6 +130,7 @@ class Files extends _Set
 		
 		return $f;
 	}
+	
 	
 	
 }
